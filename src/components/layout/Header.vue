@@ -14,14 +14,21 @@ export default {
 </script>
 
 <style scoped>
+.header {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
 #nav {
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
 }
 
 .route {
   text-decoration: none;
-  margin-right: 50%;
+  margin-right: 3rem;
 }
 
 .route:focus {

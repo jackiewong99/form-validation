@@ -26,22 +26,15 @@ export default {
   margin-top: 60px;
   width: 100%;
   height: 100%;
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  grid-auto-rows: 62px;
 }
 
 #nav {
-  grid-row: 1 / 1;
-  align-self: center;
-  justify-self: end;
-  margin-right: 15%;
+  margin: 5px 0;
+  padding: 5px 0;
 }
 
 .view {
-  grid-row: 2 / 11;
-  justify-self: center;
-  width: 50%;
+  margin: 5rem 0;
+  padding: 5rem 0;
 }
 </style>

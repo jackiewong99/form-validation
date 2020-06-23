@@ -24,6 +24,6 @@ export default {
   align-items: center;
 }
 #form {
-  width: 50%;
+  width: 30%;
 }
 </style>
