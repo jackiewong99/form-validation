@@ -3,14 +3,34 @@
     <form class="form">
       <h2>Create Account</h2>
       <div class="input-item">
-        <label class="input-label" for="username">Username: </label>
+        <label for="first-name" class="input-label">First Name: </label>
         <input
-          class="input-box"
           type="text"
-          name="username"
-          placeholder="Username"
+          name="first-name"
+          class="input-box"
+          v-model="firstName"
+          v-on:keyup="validateName(firstName, 'first')"
           required
         />
+        <span v-if="valid['firstName']">Valid</span>
+        <span v-else>Invalid</span>
+      </div>
+      <div class="input-item">
+        <label for="last-name" class="input-label">Last Name: </label>
+        <input
+          type="text"
+          name="last-name"
+          class="input-box"
+          v-model="lastName"
+          v-on:keyup="validateName(lastName, 'last')"
+          required
+        />
+        <span v-if="valid['lastName']">Valid</span>
+        <span v-else>Invalid</span>
+      </div>
+      <div class="input-item">
+        <label class="input-label" for="username">Username: </label>
+        <input class="input-box" type="text" name="username" required />
       </div>
       <div class="input-item">
         <label class="input-label" for="password">Password: </label>
@@ -18,13 +38,12 @@
           class="input-box"
           type="password"
           name="password"
-          placeholder="Password"
           v-model="password"
           v-on:keyup="validatePassword"
           required
         />
         <!-- Temporary validation notification for building purposes -->
-        <span v-if="validPassword">Valid Password</span>
+        <span v-if="valid['password']">Valid Password</span>
         <span v-else>Invalid Password</span>
       </div>
       <div class="input-item">
@@ -33,19 +52,7 @@
           class="input-box"
           type="text"
           name="email"
-          placeholder="Email"
           v-model="email"
-          v-on:keyup="validateEmail"
-          required
-        />
-      </div>
-      <div class="input-item">
-        <label class="input-label" for="credit-card">Credit Card: </label>
-        <input
-          class="input-box"
-          type="text"
-          name="credit-card"
-          placeholder="Credit Card Number"
           required
         />
       </div>
@@ -61,13 +68,41 @@ export default {
   name: 'Form',
   data() {
     return {
+      firstName: '',
+      lastName: '',
       password: '',
       email: '',
-      validPassword: false,
-      validEmail: false
+      valid: {
+        firstName: false,
+        lastName: false,
+        password: false
+      }
     };
   },
   methods: {
+    validateName(name, namePart) {
+      const charRegex = /^([A-Z]){1}[a-z]{1,}[ ]?([A-Z]){1}?[a-z]{1,}?$/g;
+      const charTest = charRegex.test(name);
+
+      if (charTest === true && namePart === 'first') {
+        this.valid['firstName'] = true;
+      } else {
+        this.valid['firstName'] = false;
+      }
+      if (charTest === true && namePart === 'last') {
+        this.valid['lastName'] = true;
+      } else {
+        this.valid['lastName'] = false;
+      }
+
+      switch (namePart) {
+        case 'first':
+          return this.valid['firstName'];
+
+        case 'last':
+          return this.valid['lastName'];
+      }
+    },
     validatePassword() {
       // Regular expression that matches any uppercase character,
       // lowercase character, digit character, and special character.
@@ -82,16 +117,12 @@ export default {
       const whiteSpaceTest = whiteSpaceRegex.test(this.password);
 
       if (charTest === true && whiteSpaceTest === false) {
-        this.validPassword = true;
+        this.valid['password'] = true;
       } else {
-        this.validPassword = false;
+        this.valid['password'] = false;
       }
 
-      return this.validPasword;
-    },
-    validateEmail() {
-      // Character pattern of email: <emailName>@<websiteName>.<top-level domain suffix (com, org, edu, gov)>
-      return this.validEmail;
+      return this.valid['password'];
     }
   }
 };
@@ -101,5 +132,29 @@ export default {
 .form-container {
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.form {
+  margin: 0 auto;
+  width: 80%;
+}
+
+label,
+input {
+  display: inline-block;
+}
+
+label {
+  width: 30%;
+  text-align: right;
+}
+
+label + input {
+  width: 30%;
+  margin: 0 30% 0 4%;
+}
+
+input + input {
+  float: right;
 }
 </style>
