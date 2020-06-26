@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <form class="form">
+    <form class="form" @submit.prevent="">
       <h2>Create Account</h2>
       <div class="input-item">
         <label for="first-name" class="input-label">First Name: </label>
@@ -83,6 +83,10 @@ export default {
   },
   methods: {
     validateName(name, namePart) {
+      // Regular expression that matches the pattern of
+      // exactly 1 uppercase character at the beginning and
+      // at least 1 lowercase character following the first character.
+      // This expression also matches names with two parts.
       const charRegex = /^([A-Z]{1})([a-z]{1,})[ -]?([A-Z]{1})?([a-z]{1,})?$/g;
       const charTest = charRegex.test(name);
 
