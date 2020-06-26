@@ -39,7 +39,7 @@
           type="password"
           name="password"
           v-model="password"
-          v-on:keyup="validatePassword"
+          v-on:keyup="debounceValidatePassword"
           required
         />
         <!-- Temporary validation notification for building purposes -->
@@ -64,6 +64,8 @@
 </template>
 
 <script>
+import { debounce } from 'debounce';
+
 export default {
   name: 'Form',
   data() {
@@ -81,7 +83,7 @@ export default {
   },
   methods: {
     validateName(name, namePart) {
-      const charRegex = /^([A-Z]){1}[a-z]{1,}[ ]?([A-Z]){1}?[a-z]{1,}?$/g;
+      const charRegex = /^([A-Z]{1})([a-z]{1,})[ -]?([A-Z]{1})?([a-z]{1,})?$/g;
       const charTest = charRegex.test(name);
 
       if (charTest === true && namePart === 'first') {
@@ -123,7 +125,10 @@ export default {
       }
 
       return this.valid['password'];
-    }
+    },
+    debounceValidatePassword: debounce(function() {
+      this.validatePassword();
+    }, 1000)
   }
 };
 </script>
