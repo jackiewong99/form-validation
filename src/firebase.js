@@ -1,18 +1,21 @@
 import firebase from 'firebase/app';
+import 'firebase/auth';
 import 'firebase/firestore';
 
-const firebaseApp = firebase.initializeApp({
+const firebaseConfig = {
   // Firebase config data
-  apiKey: 'AIzaSyCw024XZGMh_q81aqkndIOmX12F5JH5tN8',
-  authDomain: 'form-validation-29df6.firebaseapp.com',
-  databaseURL: 'https://form-validation-29df6.firebaseio.com',
-  projectId: 'form-validation-29df6',
-  storageBucket: 'form-validation-29df6.appspot.com',
-  messagingSenderId: '50347228462',
-  appId: '1:50347228462:web:0188a202488c84d8274ebf'
-});
+  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+  authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.VUE_APP_FIREBASE_DB_URL,
+  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.VUE_APP_FIREBASE_STG_BUCKET,
+  messagingSenderId: process.env.VUE_APP_FIREBASE_MSG_SENDER_ID,
+  appId: process.env.VUE_APP_FIREBASE_APP_ID
+};
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
+const auth = firebaseApp.auth();
 const db = firebaseApp.firestore();
 
 // Export the database
-export { db };
+export { actionCodeSettings, auth, db };
