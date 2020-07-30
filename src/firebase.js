@@ -18,4 +18,4 @@ const auth = firebaseApp.auth();
 const db = firebaseApp.firestore();
 
 // Export the database
-export { actionCodeSettings, auth, db };
+export { auth, db };
