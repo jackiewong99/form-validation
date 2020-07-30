@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <form class="form" @submit.prevent="">
+    <form v-if="finish === false" class="form" @submit.prevent="validateForm">
       <h2>Create Account</h2>
       <div class="input-item">
         <label for="first-name" class="input-label">First Name: </label>
@@ -9,7 +9,7 @@
           name="first-name"
           class="input-box"
           v-model="firstName"
-          v-on:keyup="validateName(firstName, 'first')"
+          v-on:keyup="validateFirstName(firstName)"
           required
         />
         <span v-if="valid['firstName']">Valid</span>
@@ -22,7 +22,7 @@
           name="last-name"
           class="input-box"
           v-model="lastName"
-          v-on:keyup="validateName(lastName, 'last')"
+          v-on:keyup="validateLastName(lastName)"
           required
         />
         <span v-if="valid['lastName']">Valid</span>
@@ -30,7 +30,13 @@
       </div>
       <div class="input-item">
         <label class="input-label" for="username">Username: </label>
-        <input class="input-box" type="text" name="username" required />
+        <input
+          class="input-box"
+          type="text"
+          name="username"
+          v-model="username"
+          required
+        />
       </div>
       <div class="input-item">
         <label class="input-label" for="password">Password: </label>
@@ -39,7 +45,7 @@
           type="password"
           name="password"
           v-model="password"
-          v-on:keyup="debounceValidatePassword"
+          v-on:keyup="debouncePasswordValidation"
           required
         />
         <!-- Temporary validation notification for building purposes -->
@@ -57,32 +63,40 @@
         />
       </div>
       <div class="input-item">
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Sign Up" />
       </div>
     </form>
+    <SignUpMsg v-if="finish" />
   </div>
 </template>
 
 <script>
 import { debounce } from 'debounce';
+import { auth } from '@/firebase';
+import SignUpMsg from './SignUpMsg';
 
 export default {
   name: 'Form',
+  components: {
+    SignUpMsg
+  },
   data() {
     return {
       firstName: '',
       lastName: '',
+      username: '',
       password: '',
       email: '',
       valid: {
         firstName: false,
         lastName: false,
         password: false
-      }
+      },
+      finish: false
     };
   },
   methods: {
-    validateName(name, namePart) {
+    validateFirstName(name) {
       // Regular expression that matches the pattern of
       // exactly 1 uppercase character at the beginning and
       // at least 1 lowercase character following the first character.
@@ -90,24 +104,29 @@ export default {
       const charRegex = /^([A-Z]{1})([a-z]{1,})[ -]?([A-Z]{1})?([a-z]{1,})?$/g;
       const charTest = charRegex.test(name);
 
-      if (charTest === true && namePart === 'first') {
+      if (charTest === true) {
         this.valid['firstName'] = true;
       } else {
         this.valid['firstName'] = false;
       }
-      if (charTest === true && namePart === 'last') {
+
+      return this.valid['firstName'];
+    },
+    validateLastName(name) {
+      // Regular expression that matches the pattern of
+      // exactly 1 uppercase character at the beginning and
+      // at least 1 lowercase character following the first character.
+      // This expression also matches names with two parts (only allowing a hyphen).
+      const charRegex = /^([A-Z]{1})([a-z]{1,})[-]?([A-Z]{1})?([a-z]{1,})?$/g;
+      const charTest = charRegex.test(name);
+
+      if (charTest === true) {
         this.valid['lastName'] = true;
       } else {
         this.valid['lastName'] = false;
       }
 
-      switch (namePart) {
-        case 'first':
-          return this.valid['firstName'];
-
-        case 'last':
-          return this.valid['lastName'];
-      }
+      return this.valid['lastName'];
     },
     validatePassword() {
       // Regular expression that matches any uppercase character,
@@ -130,9 +149,33 @@ export default {
 
       return this.valid['password'];
     },
-    debounceValidatePassword: debounce(function() {
+    debouncePasswordValidation: debounce(function() {
       this.validatePassword();
-    }, 1000)
+    }, 750),
+    async validateForm() {
+      auth
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(account => {
+          alert(`Account created for ${account.user.email}`);
+          const user = auth.currentUser;
+          user
+            .sendEmailVerification()
+            .then(() => {
+              alert(`Email has been sent to ${account.user.email}`);
+              this.finish = true;
+            })
+            .catch(error => {
+              alert(error.message);
+            });
+        })
+        .catch(error => {
+          alert(error.message);
+        });
+
+      // Send the user an email to verify the account
+      // Clear the Form component of elements and show text
+      // and animation of successful form submission.
+    }
   }
 };
 </script>
