@@ -1,7 +1,13 @@
 <template>
   <div class="form-container">
-    <form v-if="finish === false" class="form" @submit.prevent="validateForm">
+    <form class="form" @submit.prevent="validateForm">
       <h2>Create Account</h2>
+      <p>
+        <em>
+          Do not enter your personal information. However, an active email
+          account is required for the verification to work.
+        </em>
+      </p>
       <div class="input-item">
         <label for="first-name" class="input-label">First Name: </label>
         <input
@@ -66,20 +72,15 @@
         <input type="submit" value="Sign Up" />
       </div>
     </form>
-    <SignUpMsg v-if="finish" />
   </div>
 </template>
 
 <script>
 import { debounce } from 'debounce';
 import { auth } from '@/firebase';
-import SignUpMsg from './SignUpMsg';
 
 export default {
   name: 'Form',
-  components: {
-    SignUpMsg
-  },
   data() {
     return {
       firstName: '',
@@ -91,8 +92,7 @@ export default {
         firstName: false,
         lastName: false,
         password: false
-      },
-      finish: false
+      }
     };
   },
   methods: {
@@ -158,11 +158,13 @@ export default {
         .then(account => {
           alert(`Account created for ${account.user.email}`);
           const user = auth.currentUser;
+          console.log(user);
           user
             .sendEmailVerification()
             .then(() => {
               alert(`Email has been sent to ${account.user.email}`);
-              this.finish = true;
+              // On successful send, push to the '/success' route
+              this.$router.push({ path: 'success' });
             })
             .catch(error => {
               alert(error.message);
@@ -171,10 +173,6 @@ export default {
         .catch(error => {
           alert(error.message);
         });
-
-      // Send the user an email to verify the account
-      // Clear the Form component of elements and show text
-      // and animation of successful form submission.
     }
   }
 };
