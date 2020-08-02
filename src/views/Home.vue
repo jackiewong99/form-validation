@@ -12,21 +12,7 @@ export default {
   name: 'Home',
   components: {
     Form
-  },
-  data() {
-    return {
-      finish: false
-    };
   }
-
-  // Create an event to show the successful/fail sign up message
-  // after the Form component.
-
-  // Create a new component called SignUpMsg
-  // This component will show the user if
-  // the sign up was a success or fail
-  // Pass data into this component to determine
-  // whether to show success or fail message
 };
 </script>
 
