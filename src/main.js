@@ -1,13 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { firestorePlugin } from 'vuefire';
 import App from './App.vue';
 import Home from './views/Home';
 import SignUpMsg from './views/SignUpMsg';
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
-Vue.use(firestorePlugin);
 
 const routes = [
   {
