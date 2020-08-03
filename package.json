@@ -12,11 +12,8 @@
     "core-js": "^3.6.5",
     "debounce": "^1.2.0",
     "firebase": "^7.15.4",
-    "gsap": "^3.3.3",
-    "nodemailer": "^6.4.10",
     "vue": "^2.6.11",
-    "vue-router": "^3.3.4",
-    "vuefire": "^2.2.2"
+    "vue-router": "^3.3.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
