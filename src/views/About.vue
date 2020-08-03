@@ -2,28 +2,13 @@
   <div class="about">
     <h1>About</h1>
     <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo saepe
-      molestiae delectus aut alias? Provident doloribus laboriosam ut nisi
-      deleniti perspiciatis sit veritatis velit quis eius atque tempore vel,
-      voluptatum, quae enim quisquam obcaecati! Ut recusandae quam
-      exercitationem aperiam. Libero laboriosam dolorum perferendis itaque
-      numquam officiis molestias facere cum dolor.
+      In this project, I am demonstrating and practicing validation of form data
+      using Regular Expressions (RegEx) and Firebase (for authentication and
+      email verification).
     </p>
     <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo saepe
-      molestiae delectus aut alias? Provident doloribus laboriosam ut nisi
-      deleniti perspiciatis sit veritatis velit quis eius atque tempore vel,
-      voluptatum, quae enim quisquam obcaecati! Ut recusandae quam
-      exercitationem aperiam. Libero laboriosam dolorum perferendis itaque
-      numquam officiis molestias facere cum dolor.
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo saepe
-      molestiae delectus aut alias? Provident doloribus laboriosam ut nisi
-      deleniti perspiciatis sit veritatis velit quis eius atque tempore vel,
-      voluptatum, quae enim quisquam obcaecati! Ut recusandae quam
-      exercitationem aperiam. Libero laboriosam dolorum perferendis itaque
-      numquam officiis molestias facere cum dolor.
+      I could definitely improve the user experience, however my main focus for
+      this project was to practice validating form data and get the project out.
     </p>
   </div>
 </template>
