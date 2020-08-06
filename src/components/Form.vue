@@ -2,10 +2,11 @@
   <div class="form-container">
     <form @submit.prevent="validateForm">
       <h2>Create Account</h2>
-      <p class="disclaimer">
+      <p class="instructions">
         <em>
-          Do not enter your personal information. However, an active email
-          account is required for the verification to work.
+          * Do not enter your personal information. However, an active email
+          account is required for the verification to work. All fields are
+          required.
         </em>
       </p>
       <div class="input-item">
@@ -205,8 +206,8 @@ export default {
   box-sizing: border-box;
 }
 
-.disclaimer {
-  margin: 0 1rem;
+.instructions {
+  margin: 0 1rem 1rem;
 }
 
 .col-left {
