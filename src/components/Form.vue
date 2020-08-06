@@ -252,7 +252,7 @@ input[type='submit']:hover {
 
 input[type='submit']:active {
   background-color: rgba(64, 172, 255, 0.4);
-  transform: translateY(3px);
+  transform: translateY(2px);
 }
 
 span {
