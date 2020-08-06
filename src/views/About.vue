@@ -27,4 +27,8 @@ export default {
   align-items: center;
   width: 35%;
 }
+
+p {
+  width: clamp(25ch, 50%, 46ch);
+}
 </style>
