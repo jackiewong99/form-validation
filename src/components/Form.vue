@@ -1,75 +1,95 @@
 <template>
   <div class="form-container">
-    <form class="form" @submit.prevent="validateForm">
+    <form @submit.prevent="validateForm">
       <h2>Create Account</h2>
-      <p>
+      <p class="disclaimer">
         <em>
           Do not enter your personal information. However, an active email
           account is required for the verification to work.
         </em>
       </p>
       <div class="input-item">
-        <label for="first-name" class="input-label">First Name: </label>
-        <input
-          type="text"
-          name="first-name"
-          class="input-box"
-          v-model="firstName"
-          v-on:keyup="validateFirstName(firstName)"
-          required
-        />
-        <span v-if="valid['firstName']">Valid</span>
-        <span v-else>Invalid</span>
+        <div class="col-left">
+          <label for="first-name" class="input-label">First Name </label>
+        </div>
+        <div class="col-right">
+          <input
+            type="text"
+            name="first-name"
+            class="input-box"
+            v-model="firstName"
+            v-on:keyup="validateFirstName(firstName)"
+            required
+          />
+          <span v-if="valid['firstName']">Valid</span>
+          <span v-else>Invalid</span>
+        </div>
       </div>
       <div class="input-item">
-        <label for="last-name" class="input-label">Last Name: </label>
-        <input
-          type="text"
-          name="last-name"
-          class="input-box"
-          v-model="lastName"
-          v-on:keyup="validateLastName(lastName)"
-          required
-        />
-        <span v-if="valid['lastName']">Valid</span>
-        <span v-else>Invalid</span>
+        <div class="col-left">
+          <label for="last-name" class="input-label">Last Name </label>
+        </div>
+        <div class="col-right">
+          <input
+            type="text"
+            name="last-name"
+            class="input-box"
+            v-model="lastName"
+            v-on:keyup="validateLastName(lastName)"
+            required
+          />
+          <span v-if="valid['lastName']">Valid</span>
+          <span v-else>Invalid</span>
+        </div>
       </div>
       <div class="input-item">
-        <label class="input-label" for="username">Username: </label>
-        <input
-          class="input-box"
-          type="text"
-          name="username"
-          v-model="username"
-          required
-        />
+        <div class="col-left">
+          <label class="input-label" for="username">Username </label>
+        </div>
+        <div class="col-right">
+          <input
+            class="input-box"
+            type="text"
+            name="username"
+            v-model="username"
+            required
+          />
+        </div>
       </div>
       <div class="input-item">
-        <label class="input-label" for="password">Password: </label>
-        <input
-          class="input-box"
-          type="password"
-          name="password"
-          v-model="password"
-          v-on:keyup="debouncePasswordValidation"
-          required
-        />
-        <!-- Temporary validation notification for building purposes -->
-        <span v-if="valid['password']">Valid Password</span>
-        <span v-else>Invalid Password</span>
+        <div class="col-left">
+          <label class="input-label" for="password">Password </label>
+        </div>
+        <div class="col-right">
+          <input
+            class="input-box"
+            type="password"
+            name="password"
+            v-model="password"
+            v-on:keyup="debouncePasswordValidation"
+            required
+          />
+          <!-- Temporary validation notification for building purposes -->
+          <span v-if="valid['password']">Valid Password</span>
+          <span v-else>Invalid Password</span>
+        </div>
       </div>
       <div class="input-item">
-        <label class="input-label" for="email">Email: </label>
-        <input
-          class="input-box"
-          type="text"
-          name="email"
-          v-model="email"
-          required
-        />
+        <div class="col-left">
+          <label class="input-label" for="email">Email </label>
+        </div>
+        <div class="col-right">
+          <input
+            class="input-box"
+            type="text"
+            name="email"
+            v-model="email"
+            required
+          />
+        </div>
       </div>
       <div class="input-item">
-        <input type="submit" value="Sign Up" />
+        <input class="submit-btn" type="submit" value="Sign Up" />
       </div>
     </form>
   </div>
@@ -182,29 +202,60 @@ export default {
 .form-container {
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 
-.form {
-  margin: 0 auto;
-  width: 80%;
+.disclaimer {
+  margin: 0 1rem;
 }
 
-label,
-input {
+.col-left {
+  float: left;
+  margin-top: 6px;
+  width: 25%;
+}
+
+.col-right {
+  float: left;
+  margin-top: 6px;
+  width: 75%;
+}
+
+.input-label {
   display: inline-block;
 }
 
-label {
-  width: 30%;
-  text-align: right;
+.input-box {
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-label + input {
-  width: 30%;
-  margin: 0 30% 0 4%;
+input[type='submit'] {
+  background-color: rgb(64, 172, 255);
+  border: none;
+  border-radius: 5px;
+  color: rgb(250, 250, 250);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  height: 3rem;
+  margin: 1rem 0;
+  outline: none;
+  padding: 0;
+  transition: ease-out 0.4s;
+  width: 7rem;
 }
 
-input + input {
-  float: right;
+input[type='submit']:hover {
+  background-color: rgba(64, 172, 255, 0.8);
+}
+
+input[type='submit']:active {
+  background-color: rgba(64, 172, 255, 0.4);
+  transform: translateY(3px);
+}
+
+span {
+  padding-left: 30px;
 }
 </style>
