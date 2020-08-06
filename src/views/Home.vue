@@ -25,6 +25,6 @@ export default {
 }
 
 #form {
-  width: 70%;
+  width: 55%;
 }
 </style>
