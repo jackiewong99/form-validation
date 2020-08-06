@@ -23,12 +23,15 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  display: grid;
+  place-items: center;
   margin-top: 60px;
   width: 100%;
   height: 100%;
 }
 
 #nav {
+  justify-self: end;
   margin: 5px 0;
   padding: 5px 0;
 }
