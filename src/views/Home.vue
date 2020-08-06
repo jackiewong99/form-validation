@@ -23,7 +23,8 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 #form {
-  width: 30%;
+  width: 70%;
 }
 </style>
