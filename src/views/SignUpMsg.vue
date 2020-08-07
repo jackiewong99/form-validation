@@ -10,11 +10,11 @@
         verify your email.
       </p>
       <p>
-        <em
-          >NOTE: There is no login functionality, your account will be deleted
+        <em>
+          NOTE: There is no login functionality, your account will be deleted
           after verification, and the information you have entered will not be
-          used or sold for any purposes.</em
-        >
+          used or sold for any purposes.
+        </em>
       </p>
     </div>
   </div>
