@@ -3,7 +3,7 @@
     <h1>About</h1>
     <p>
       In this project, I am demonstrating and practicing validation of form data
-      using Regular Expressions (RegEx) and Firebase (for authentication and
+      using regular expressions (RegEx) and Firebase (for authentication and
       email verification).
     </p>
     <p>
