@@ -11,41 +11,45 @@
       </p>
       <div class="input-item">
         <div class="col-left">
-          <label for="first-name" class="input-label">First Name </label>
+          <label for="first-name" class="input-label">First Name</label>
         </div>
         <div class="col-right">
           <input
             type="text"
             name="first-name"
             class="input-box"
+            v-bind:class="{
+              valid: valid['firstName'],
+              invalid: !valid['firstName']
+            }"
             v-model="firstName"
             v-on:keyup="validateFirstName(firstName)"
             required
           />
-          <span v-if="valid['firstName']">Valid</span>
-          <span v-else>Invalid</span>
         </div>
       </div>
       <div class="input-item">
         <div class="col-left">
-          <label for="last-name" class="input-label">Last Name </label>
+          <label for="last-name" class="input-label">Last Name</label>
         </div>
         <div class="col-right">
           <input
             type="text"
             name="last-name"
             class="input-box"
+            v-bind:class="{
+              valid: valid['lastName'],
+              invalid: !valid['lastName']
+            }"
             v-model="lastName"
             v-on:keyup="validateLastName(lastName)"
             required
           />
-          <span v-if="valid['lastName']">Valid</span>
-          <span v-else>Invalid</span>
         </div>
       </div>
       <div class="input-item">
         <div class="col-left">
-          <label class="input-label" for="username">Username </label>
+          <label class="input-label" for="username">Username</label>
         </div>
         <div class="col-right">
           <input
@@ -59,25 +63,26 @@
       </div>
       <div class="input-item">
         <div class="col-left">
-          <label class="input-label" for="password">Password </label>
+          <label class="input-label" for="password">Password</label>
         </div>
         <div class="col-right">
           <input
             class="input-box"
             type="password"
             name="password"
+            v-bind:class="{
+              valid: valid['password'],
+              invalid: !valid['password']
+            }"
             v-model="password"
             v-on:keyup="debouncePasswordValidation"
             required
           />
-          <!-- Temporary validation notification for building purposes -->
-          <span v-if="valid['password']">Valid Password</span>
-          <span v-else>Invalid Password</span>
         </div>
       </div>
       <div class="input-item">
         <div class="col-left">
-          <label class="input-label" for="email">Email </label>
+          <label class="input-label" for="email">Email</label>
         </div>
         <div class="col-right">
           <input
@@ -89,7 +94,7 @@
           />
         </div>
       </div>
-      <div class="input-item">
+      <div>
         <input class="submit-btn" type="submit" value="Sign Up" />
       </div>
     </form>
@@ -212,23 +217,27 @@ export default {
 
 .col-left {
   float: left;
-  margin-top: 6px;
+  margin-top: 1rem;
   width: 25%;
 }
 
 .col-right {
   float: left;
-  margin-top: 6px;
+  margin-top: 1rem;
   width: 75%;
 }
 
-.input-label {
+label {
   display: inline-block;
 }
 
 .input-box {
   border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.5);
+  outline: none;
+  transition: ease-out 0.5s;
+  width: 90%;
 }
 
 input[type='submit'] {
@@ -256,7 +265,24 @@ input[type='submit']:active {
   transform: translateY(2px);
 }
 
-span {
-  padding-left: 30px;
+/* Outline for valid and invalid data */
+.valid {
+  border-color: rgb(92, 201, 91);
+}
+
+.invalid {
+  border-color: rgb(232, 67, 67);
+}
+
+@media screen and (max-width: 730px) {
+  .col-left {
+    width: 100%;
+    float: none;
+  }
+
+  .col-right {
+    width: 100%;
+    float: none;
+  }
 }
 </style>
