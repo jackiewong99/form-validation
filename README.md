@@ -17,6 +17,8 @@ You can find the project here: https://form-validation-29df6.web.app/
 
 ## Project setup
 
+\* **NOTE:** Copy the **.env.sample** file to your **.env** file and replace the placeholder text with your Firebase app configuration credentials.
+
 ```
 npm install
 ```
