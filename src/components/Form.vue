@@ -19,8 +19,9 @@
             name="first-name"
             class="input-box"
             v-bind:class="{
-              valid: valid['firstName'],
-              invalid: !valid['firstName']
+              empty: empty['firstName'],
+              valid: valid['firstName'] && !empty['firstName'],
+              invalid: !valid['firstName'] && !empty['firstName']
             }"
             v-model="firstName"
             v-on:keyup="validateFirstName(firstName)"
@@ -38,8 +39,9 @@
             name="last-name"
             class="input-box"
             v-bind:class="{
-              valid: valid['lastName'],
-              invalid: !valid['lastName']
+              empty: empty['lastName'],
+              valid: valid['lastName'] && !empty['lastName'],
+              invalid: !valid['lastName'] && !empty['lastName']
             }"
             v-model="lastName"
             v-on:keyup="validateLastName(lastName)"
@@ -71,8 +73,9 @@
             type="password"
             name="password"
             v-bind:class="{
-              valid: valid['password'],
-              invalid: !valid['password']
+              empty: empty['password'],
+              valid: valid['password'] && !empty['password'],
+              invalid: !valid['password'] && !empty['password']
             }"
             v-model="password"
             v-on:keyup="debouncePasswordValidation"
@@ -118,62 +121,84 @@ export default {
         firstName: false,
         lastName: false,
         password: false
+      },
+      empty: {
+        firstName: true,
+        lastName: true,
+        password: true
       }
     };
   },
   methods: {
     validateFirstName(name) {
-      // Regular expression that matches the pattern of
-      // exactly 1 uppercase character at the beginning and
-      // at least 1 lowercase character following the first character.
-      // This expression also matches names with two parts.
-      const charRegex = /^([A-Z]{1})([a-z]{1,})[ -]?([A-Z]{1})?([a-z]{1,})?$/g;
-      const charTest = charRegex.test(name);
-
-      if (charTest === true) {
-        this.valid['firstName'] = true;
+      if (name.length === 0) {
+        this.empty['firstName'] = true;
       } else {
-        this.valid['firstName'] = false;
-      }
+        // Regular expression that matches the pattern of
+        // exactly 1 uppercase character at the beginning and
+        // at least 1 lowercase character following the first character.
+        // This expression also matches names with two parts.
+        const charRegex = /^([A-Z]{1})([a-z]{1,})[ -]?([A-Z]{1})?([a-z]{1,})?$/g;
+        const charTest = charRegex.test(name);
+        this.empty['firstName'] = false;
 
-      return this.valid['firstName'];
+        if (charTest === true) {
+          this.valid['firstName'] = true;
+        } else {
+          this.valid['firstName'] = false;
+        }
+      }
+      const validationVars = [this.empty['firstName'], this.valid['firstName']];
+      return validationVars;
     },
     validateLastName(name) {
-      // Regular expression that matches the pattern of
-      // exactly 1 uppercase character at the beginning and
-      // at least 1 lowercase character following the first character.
-      // This expression also matches names with two parts (only allowing a hyphen).
-      const charRegex = /^([A-Z]{1})([a-z]{1,})[-]?([A-Z]{1})?([a-z]{1,})?$/g;
-      const charTest = charRegex.test(name);
-
-      if (charTest === true) {
-        this.valid['lastName'] = true;
+      if (name.length === 0) {
+        this.empty['lastName'] = true;
       } else {
-        this.valid['lastName'] = false;
-      }
+        // Regular expression that matches the pattern of
+        // exactly 1 uppercase character at the beginning and
+        // at least 1 lowercase character following the first character.
+        // This expression also matches names with two parts (only allowing a hyphen).
+        const charRegex = /^([A-Z]{1})([a-z]{1,})[-]?([A-Z]{1})?([a-z]{1,})?$/g;
+        const charTest = charRegex.test(name);
+        this.empty['lastName'] = false;
 
-      return this.valid['lastName'];
+        if (charTest === true) {
+          this.valid['lastName'] = true;
+        } else {
+          this.valid['lastName'] = false;
+        }
+      }
+      const validationVars = [this.empty['lastName'], this.valid['firstName']];
+
+      return validationVars;
     },
     validatePassword() {
-      // Regular expression that matches any uppercase character,
-      // lowercase character, digit character, and special character.
-      // Quantifier then matches 6 or more of the preceding characters.
-      const charRegex = /(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}/g;
-
-      // Regular expression that matches any whitespace character
-      const whiteSpaceRegex = /\s/g;
-
-      // Test each regular expression:
-      const charTest = charRegex.test(this.password);
-      const whiteSpaceTest = whiteSpaceRegex.test(this.password);
-
-      if (charTest === true && whiteSpaceTest === false) {
-        this.valid['password'] = true;
+      if (this.password.length === 0) {
+        this.empty['password'] = true;
       } else {
-        this.valid['password'] = false;
-      }
+        // Regular expression that matches any uppercase character,
+        // lowercase character, digit character, and special character.
+        // Quantifier then matches 6 or more of the preceding characters.
+        const charRegex = /(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}/g;
 
-      return this.valid['password'];
+        // Regular expression that matches any whitespace character
+        const whiteSpaceRegex = /\s/g;
+
+        // Test each regular expression:
+        const charTest = charRegex.test(this.password);
+        const whiteSpaceTest = whiteSpaceRegex.test(this.password);
+        this.empty['password'] = false;
+
+        if (charTest === true && whiteSpaceTest === false) {
+          this.valid['password'] = true;
+        } else {
+          this.valid['password'] = false;
+        }
+      }
+      const validationVars = [this.empty['password'], this.valid['password']];
+
+      return validationVars;
     },
     debouncePasswordValidation: debounce(function() {
       this.validatePassword();
@@ -233,7 +258,7 @@ label {
 
 .input-box {
   border-radius: 5px;
-  border: 1px solid;
+  border: 2px solid;
   border-color: rgba(0, 0, 0, 0.5);
   outline: none;
   transition: ease-out 0.5s;
@@ -266,6 +291,10 @@ input[type='submit']:active {
 }
 
 /* Outline for valid and invalid data */
+.empty {
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
 .valid {
   border-color: rgb(92, 201, 91);
 }
